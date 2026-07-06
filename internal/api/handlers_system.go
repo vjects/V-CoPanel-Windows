@@ -416,7 +416,7 @@ echo Done. Self-destructing.
 		w.Header().Set("Content-Type", "application/json")
 		
 		recs, _ := database.FetchInfrastructureRecords(ctx.MariaRoot, "3306")
-		engineVer := "v1.0.0"
+		engineVer := "v2.0.1"
 		corePhp := "php-8.3"
 		
 		for _, rec := range recs {
