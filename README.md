@@ -23,7 +23,7 @@
 ---
 
 > [!IMPORTANT]
-> **End-Users: Do NOT download the Source Code ZIP.**
+> **End-Users: Not much difference in releases.**
 >
 > We have 2 releases... one full bundle and the other without pc-assets... You know the difference 🤭
 >
