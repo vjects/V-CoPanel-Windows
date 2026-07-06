@@ -146,7 +146,9 @@ All runtimes (PHP, Node.js, MariaDB, Redis, Mailpit, phpMyAdmin) are shipped as 
 
 | Category | Technologies |
 |----------|-------------|
-| **Languages** | PHP 8.2, 8.3, 8.4, 8.5 · Node.js v20, v22 · Go 1.23+ |
+| PHP | 8.2 · 8.3 · 8.4 · 8.5 |
+| Node.js | v20 LTS · v22 LTS · v24 LTS  |
+| Go | 1.23 · 1.26 |
 | **Database** | MariaDB 11.4 (MySQL-compatible) |
 | **Cache** | Redis 5.0 |
 | **Mail Testing** | Mailpit |
