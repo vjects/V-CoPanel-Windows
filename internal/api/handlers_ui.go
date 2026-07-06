@@ -38,7 +38,7 @@ func registerUIRoutes(mux *http.ServeMux, ctx *ServerContext) {
 
 		// ── Engine identity from DB ───────────────────────────────────────────
 		engineName := "V-CoPanel Bridge"
-		engineVer := "v1.0.0"
+		engineVer := "v2.0.1"
 
 		recs, _ := database.FetchInfrastructureRecords(ctx.MariaRoot, "3306")
 		for _, rec := range recs {
