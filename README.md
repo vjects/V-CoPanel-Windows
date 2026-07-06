@@ -42,7 +42,7 @@
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots (V.1.0.0)
 
 <details>
   <summary><b>🖼️ Click to view all 13 screenshots</b></summary>
