@@ -25,7 +25,8 @@
 > [!IMPORTANT]
 > **End-Users: Do NOT download the Source Code ZIP.**
 >
-> The source repository intentionally excludes the heavy offline runtime archives inside `pc-assets/` to comply with GitHub size limits. Downloading `Source code.zip` will produce a non-functional installation.
+> The source repository intentionally excludes the heavy offline runtime archives inside `pc-assets/` to comply with GitHub size limits. Downloading Smaller Release will produce a non-functional installation.
+Install the Full Version or you may have to download reqs yourself...
 >
 > ✅ **To run V-CoPanel:** Download the fully bundled, plug-and-play release package from the **[→ GitHub Releases](https://github.com/vjects/V-CoPanel-Windows/releases)** page. Extract the ZIP and double-click `start.bat`. That's it.
 
