@@ -360,7 +360,7 @@ echo json_encode([
 func scaffoldNodeAdvanced(dir, name, port string) error {
 	pkgJson := fmt.Sprintf(`{
   "name": "%s",
-  "version": "1.0.0",
+  "version": "2.0.1",
   "main": "index.js",
   "scripts": {
     "start": "node index.js"
