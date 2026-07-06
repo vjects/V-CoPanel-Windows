@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>V-CoPanel AI Recovery</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap">
+	<style>
+		:root {
+			--siri-blue: #2b70ff;
+			--siri-purple: #c342ff;
+			--siri-pink: #ff2b70;
+			--siri-cyan: #2bffff;
+		}
+		body {
+			margin: 0;
+			padding: 0;
+			background: #000;
+			color: #fff;
+			font-family: 'Inter', sans-serif;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			min-height: 100vh;
+			overflow: hidden;
+		}
+		
+		/* Background Mesh */
+		.bg-mesh {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			width: 100vw;
+			height: 100vh;
+			z-index: -1;
+			background: radial-gradient(circle at 50% 50%, rgba(195, 66, 255, 0.08) 0%, rgba(0,0,0,1) 60%);
+		}
+
+		/* Siri AI Orb Animation */
+		.ai-orb-container {
+			position: relative;
+			width: 220px;
+			height: 220px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 40px;
+			transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1);
+		}
+		.ai-orb-core {
+			position: absolute;
+			width: 70px;
+			height: 70px;
+			background: #fff;
+			border-radius: 50%;
+			box-shadow: 0 0 40px #fff, 0 0 80px var(--siri-purple);
+			z-index: 10;
+			animation: breathe 3s ease-in-out infinite alternate;
+			transition: all 1s ease;
+		}
+		.ai-orb-ring {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background: conic-gradient(from 0deg, var(--siri-blue), var(--siri-purple), var(--siri-pink), var(--siri-cyan), var(--siri-blue));
+			filter: blur(18px);
+			opacity: 0.8;
+			animation: spin 4s linear infinite;
+			transition: all 1s ease;
+		}
+		.ai-orb-ring:nth-child(2) {
+			width: 130%;
+			height: 130%;
+			filter: blur(35px);
+			opacity: 0.45;
+			animation: spin-reverse 7s linear infinite;
+		}
+		
+		@keyframes spin { 100% { transform: rotate(360deg); } }
+		@keyframes spin-reverse { 100% { transform: rotate(-360deg); } }
+		@keyframes breathe {
+			0% { transform: scale(0.9); box-shadow: 0 0 20px #fff, 0 0 60px var(--siri-purple); }
+			100% { transform: scale(1.15); box-shadow: 0 0 40px #fff, 0 0 90px var(--siri-pink); }
+		}
+		
+		/* Status Text */
+		.status-text {
+			font-size: 1.8rem;
+			font-weight: 300;
+			letter-spacing: 0.5px;
+			text-align: center;
+			opacity: 0.95;
+			transition: all 0.5s ease;
+			min-height: 45px;
+			background: linear-gradient(90deg, #fff, #e9d5ff);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			margin-bottom: 8px;
+		}
+		.status-subtext {
+			font-size: 0.95rem;
+			color: rgba(255,255,255,0.45);
+			text-align: center;
+			letter-spacing: 0.3px;
+			max-width: 450px;
+			line-height: 1.5;
+			min-height: 40px;
+			transition: opacity 0.5s ease;
+		}
+
+		/* Success state */
+		body.done .ai-orb-core {
+			background: #10b981;
+			box-shadow: 0 0 50px #10b981, 0 0 100px #34d399;
+			animation: none;
+			transform: scale(1.2);
+		}
+		body.done .ai-orb-ring {
+			background: conic-gradient(from 0deg, #059669, #10b981, #34d399, #10b981, #059669);
+			animation: spin 3s linear infinite;
+		}
+		
+		/* Fake steps container so the JS doesn't error out */
+		#steps-container { display: none; }
+	</style>
+</head>
+<body>
+	<div class="bg-mesh"></div>
+	
+	<div class="ai-orb-container" id="orb">
+		<div class="ai-orb-ring"></div>
+		<div class="ai-orb-ring"></div>
+		<div class="ai-orb-core"></div>
+	</div>
+
+	<div class="status-text" id="status-title">Initiating Deep System Reset</div>
+	<div class="status-subtext" id="status-desc">Terminating daemons and clearing workspace locks...</div>
+
+	<!-- Invisible steps for JS compatibility -->
+	<div id="steps-container">
+		<div id="step-1"></div>
+		<div id="step-2"></div>
+		<div id="step-3"></div>
+		<div id="step-4"></div>
+	</div>
+
+	<script>
+		// We override updateStep to map to our new UI
+		function updateStep(stepNum, status) {
+			const title = document.getElementById('status-title');
+			const desc = document.getElementById('status-desc');
+			
+			if (stepNum === 1 && status === 'active') {
+				title.innerText = "Terminating Services";
+				desc.innerText = "Releasing all file locks and shutting down daemons...";
+			} else if (stepNum === 2 && status === 'active') {
+				title.innerText = "Wiping Workspace";
+				desc.innerText = "Performing a hard clean of the runtime environment...";
+			} else if (stepNum === 3 && status === 'active') {
+				title.innerText = "Provisioning Core";
+				desc.innerText = "Extracting assets and booting fresh system components...";
+			} else if (stepNum === 4 && status === 'done') {
+				title.innerText = "Recovery Complete";
+				desc.innerText = "All systems have been restored to factory defaults.";
+				document.body.classList.add('done');
+			}
+		}
+
+		let engineRestarted = false;
+		let precheckTriggered = false;
+
+		function startRealtimeMonitor() {
+			updateStep(1, 'active');
+			
+			const pollInterval = setInterval(async () => {
+				try {
+					// Step 1 & 2 finish when the new Bridge Engine starts responding on port 8080!
+					const res = await fetch('/api/engine/info');
+					if (res.ok) {
+						if (!engineRestarted) {
+							engineRestarted = true;
+							updateStep(3, 'active');
+						}
+
+						// Automatically trigger Pre-Check if not triggered yet
+						if (!precheckTriggered) {
+							precheckTriggered = true;
+							try {
+								await fetch('/api/precheck/run', { method: 'POST' });
+							} catch (e) {}
+						}
+
+						// Now poll for precheck completion and MariaDB/Redis/Mailpit status
+						const statusRes = await fetch('/api/precheck/status');
+						if (statusRes.ok) {
+							const statusData = await statusRes.json();
+							
+							const pmaRes = await fetch('/api/phpmyadmin/status');
+							const redisRes = await fetch('/api/redis/status');
+							const mailRes = await fetch('/api/mailpit/status');
+							
+							let pmaData = {}, redisData = {}, mailData = {};
+							if (pmaRes.ok) pmaData = await pmaRes.json();
+							if (redisRes.ok) redisData = await redisRes.json();
+							if (mailRes.ok) mailData = await mailRes.json();
+
+							// Verify all runtime assets and shared services are up and verified
+							if (statusData.ready && pmaData.mariadb_running !== false && redisData.running && mailData.running) {
+								clearInterval(pollInterval);
+								updateStep(4, 'done');
+								
+								// Wait 3 seconds to show the green AI state, then close the window!
+								setTimeout(() => { try { window.close(); } catch(e){} }, 3000);
+							}
+						}
+					}
+				} catch (e) {
+					// When network fails, it means we are in step 2 (wipe and restart)
+					if (!engineRestarted) {
+						updateStep(2, 'active');
+					}
+				}
+			}, 1500);
+		}
+
+		window.addEventListener('DOMContentLoaded', startRealtimeMonitor);
+	</script>
+</body>
+</html>

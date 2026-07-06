@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>V-CoPanel (WinPro Edition) — Multi-Stack Application Manager</title>
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="stylesheet" href="/css/style.css?v=1.1">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css" />
+</head>
+<body>
+	<!-- Global Pre-Check Blocker Siri AI Orb Styles -->
+	<style>
+		.orb-wrapper {
+			position: relative;
+			width: 180px;
+			height: 180px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin-bottom: 24px;
+		}
+		.orb-core {
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			background: #fff;
+			border-radius: 50%;
+			box-shadow: 0 0 30px #fff, 0 0 60px #10b981;
+			z-index: 10;
+			animation: orbBreathe 3s ease-in-out infinite alternate;
+		}
+		.orb-ring {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			border-radius: 50%;
+			background: conic-gradient(from 0deg, #3b82f6, #06b6d4, #10b981, #3b82f6);
+			filter: blur(14px);
+			opacity: 0.8;
+			animation: orbSpin 4s linear infinite;
+		}
+		.orb-ring:nth-child(2) {
+			width: 120%;
+			height: 120%;
+			filter: blur(28px);
+			opacity: 0.45;
+			animation: orbSpinReverse 7s linear infinite;
+		}
+		
+		@keyframes orbSpin { 100% { transform: rotate(360deg); } }
+		@keyframes orbSpinReverse { 100% { transform: rotate(-360deg); } }
+		@keyframes orbBreathe {
+			0% { transform: scale(0.9); box-shadow: 0 0 20px #fff, 0 0 50px #3b82f6; }
+			100% { transform: scale(1.1); box-shadow: 0 0 35px #fff, 0 0 75px #10b981; }
+		}
+	</style>
+	
+	<!-- Fullscreen Pre-Check Installation Blocker -->
+	<div id="global-precheck-bar" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999999; display:none; background:rgba(8, 10, 16, 0.95); backdrop-filter:blur(20px); align-items:center; justify-content:center; transition: all 0.5s ease; flex-direction:column; padding: 20px;">
+		<div class="orb-wrapper">
+			<div class="orb-ring"></div>
+			<div class="orb-ring"></div>
+			<div class="orb-core"></div>
+		</div>
+
+		<h2 style="margin:0 0 8px 0; color:#fff; font-size:1.6rem; font-weight:700; letter-spacing:0.5px; text-align:center;">V-CoPanel Environment Booting</h2>
+		<span style="font-size:0.95rem; color:#10b981; font-family:'JetBrains Mono', monospace; font-weight:700; margin-bottom:24px; text-shadow:0 0 10px rgba(16,185,129,0.3);" id="global-precheck-percent">0% Completed</span>
+		
+		<!-- Log Box Console -->
+		<div style="background:rgba(0,0,0,0.55); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:20px; font-family:'JetBrains Mono', monospace; font-size:0.82rem; color:#a7f3d0; width:100%; max-width:480px; height:130px; overflow-y:auto; display:flex; flex-direction:column-reverse; gap:6px; box-shadow:0 12px 30px rgba(0,0,0,0.5);">
+			<div id="global-precheck-text" style="line-height:1.5; color:#34d399;">⏳ Initializing 3-Pillar Workspace Provisioning...</div>
+		</div>
+
+		<!-- Subtle Progress Bar -->
+		<div style="width:100%; max-width:480px; height:4px; background:rgba(255,255,255,0.06); border-radius:2px; overflow:hidden; margin-top:16px;">
+			<div id="global-precheck-fill" style="width:0%; height:100%; background: linear-gradient(90deg, #3b82f6, #10b981); transition: width 0.4s ease; box-shadow: 0 0 10px #10b981;"></div>
+		</div>
+	</div>
+
+	<!-- Dynamic Custom Wallpaper Layer -->
+	<div id="vlara-wallpaper-bg" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-10; background-size:cover; background-position:center; transition: opacity 0.8s ease; opacity: 0;"></div>
+	<!-- Studio Dark Glass Overlay -->
+	<div id="vlara-wallpaper-overlay" style="position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:-9; background: linear-gradient(135deg, rgba(16, 18, 25, 0.68) 0%, rgba(20, 22, 31, 0.76) 100%); backdrop-filter: blur(6px);"></div>
+
+	<div class="viewport">
+		<!-- Sidebar Component -->
+		<div id="sidebar-placeholder"></div>
+
+		<div class="main-layout">
+			<!-- Topbar Component -->
+			<div id="topbar-placeholder"></div>
+
+			<!-- Content Scroll Area -->
+			<main class="content-area">
+				<div id="view-vcopanel_engine-placeholder"></div>
+				<div id="view-projects-placeholder"></div>
+				<div id="view-php_config-placeholder"></div>
+				<div id="view-node_config-placeholder"></div>
+				<div id="view-go_config-placeholder"></div>
+				<div id="view-redis_config-placeholder"></div>
+				<div id="view-mariadb_config-placeholder"></div>
+				<div id="view-mailpit_config-placeholder"></div>
+			</main>
+
+			<!-- Bottom Execution Console Component -->
+			<div id="console-placeholder"></div>
+		</div>
+	</div>
+
+	<!-- JavaScript Modules -->
+	<script src="/js/utils/toast.js?v=2"></script>
+	<script src="/js/utils/console.js?v=2"></script>
+	<script src="/js/components/projects.js?v=2"></script>
+	<script src="/js/components/projects_scaffold.js?v=2"></script>
+	<script src="/js/config/php_config.js?v=2"></script>
+	<script src="/js/config/mailpit_config.js?v=2"></script>
+	<script src="/js/core/engine.js?v=4.0"></script>
+	<script src="/js/config/node_config.js?v=2"></script>
+	<script src="/js/config/go_config.js?v=2"></script>
+	<script src="/js/config/mariadb_config.js?v=2"></script>
+	<script src="/js/config/redis_config.js?v=2"></script>
+	<script src="/js/core/topbar.js?v=1"></script>
+	<script src="/js/core/app.js?v=3"></script>
+	<script>
+		// Dynamic Daily Wallpaper Loader
+		async function loadDailyWallpaper(retry = true) {
+			try {
+				const res = await fetch('/api/system/wallpapers');
+				const list = await res.json();
+				if (list && list.length > 0) {
+					// Sort alphabetically to get the latest daily Bing wallpaper (e.g. bing-2026-07-06.jpg)
+					list.sort();
+					const latestWp = list[list.length - 1];
+					const bgEl = document.getElementById('vlara-wallpaper-bg');
+					if (bgEl) {
+						console.log('[Wallpaper] Loading daily wallpaper:', latestWp);
+						const img = new Image();
+						img.onload = () => {
+							console.log('[Wallpaper] Image successfully loaded, applying to background.');
+							bgEl.style.backgroundImage = `url('${img.src}')`;
+							bgEl.style.opacity = '1';
+						};
+						img.onerror = (err) => {
+							console.error('[Wallpaper] Failed to load image asset:', img.src, err);
+						};
+						img.src = `/wallpapers/${latestWp}?v=${Date.now()}`;
+					}
+				} else if (retry) {
+					// If wallpapers directory is empty on first boot (download in progress), retry in 3.5 seconds
+					setTimeout(() => loadDailyWallpaper(false), 3500);
+				}
+			} catch(e) { console.warn('Wallpaper load fallback:', e); }
+		}
+		loadDailyWallpaper();
+
+
+	</script>
+
+	<!-- Global Shared Destructive Action Confirmation Modal -->
+	<div id="global-confirm-modal" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; z-index:999999; background:rgba(0,0,0,0.75); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:20px;">
+		<div style="background:linear-gradient(145deg, rgba(20,22,31,0.95), rgba(12,13,18,0.98)); border:1px solid rgba(239,68,68,0.35); border-radius:20px; width:100%; max-width:440px; padding:28px; box-shadow:0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(239,68,68,0.15); display:flex; flex-direction:column; gap:20px; animation: modalPop 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+			<div style="display:flex; align-items:flex-start; gap:16px;">
+				<div style="width:52px; height:52px; border-radius:14px; background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.35); display:flex; align-items:center; justify-content:center; flex-shrink:0;">
+					<span class="material-symbols-outlined" style="font-size:1.8rem; color:#f87171;">warning</span>
+				</div>
+				<div>
+					<h3 id="global-confirm-title" style="margin:0 0 6px 0; color:#fff; font-size:1.15rem; font-weight:700;">Destructive Action</h3>
+					<div id="global-confirm-desc" style="color:rgba(255,255,255,0.65); font-size:0.88rem; line-height:1.5;">Are you sure you want to proceed?</div>
+				</div>
+			</div>
+			<div style="background:rgba(239,68,68,0.08); border:1px dashed rgba(239,68,68,0.25); border-radius:12px; padding:12px 14px; color:#fca5a5; font-size:0.8rem; display:flex; align-items:center; gap:8px;">
+				<span class="material-symbols-outlined" style="font-size:1.1rem; color:#f87171;">info</span>
+				<span>This operation cannot be undone. Please confirm to execute.</span>
+			</div>
+			<div style="display:flex; justify-content:flex-end; gap:12px; margin-top:4px;">
+				<button onclick="closeConfirmModal()" style="height:42px; padding:0 20px; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.12); border-radius:10px; color:#e2e8f0; font-size:0.88rem; font-weight:600; cursor:pointer; transition:all 0.2s;">
+					Cancel
+				</button>
+				<button id="global-confirm-btn" style="height:42px; padding:0 22px; background:linear-gradient(135deg, #ef4444, #dc2626); border:none; border-radius:10px; color:#fff; font-size:0.88rem; font-weight:600; cursor:pointer; box-shadow:0 4px 14px rgba(239,68,68,0.3); display:flex; align-items:center; gap:6px; transition:all 0.2s;">
+					<span class="material-symbols-outlined" style="font-size:1.1rem;">bolt</span>
+					<span>Yes, Execute</span>
+				</button>
+			</div>
+		</div>
+	</div>
+	<style>
+		@keyframes modalPop {
+			0% { transform: scale(0.92); opacity: 0; }
+			100% { transform: scale(1); opacity: 1; }
+		}
+	</style>
+</body>
+</html>

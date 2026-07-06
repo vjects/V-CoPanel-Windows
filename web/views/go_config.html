@@ -1,0 +1,152 @@
+<style>
+/* ─── Go Runtime Studio — Unified Studio Glass System ─────────────────────
+   Primary Palette: #3b82f6 (blue), #10b981 (emerald), #ef4444 (red)
+   Icons          : rgba(255,255,255,0.45) (Uniform, non-rainbow)
+──────────────────────────────────────────────────────────────────────────── */
+
+.go-studio-card {
+	background: linear-gradient(160deg, rgba(28,32,44,0.7) 0%, rgba(18,20,28,0.5) 100%);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 16px;
+	padding: 22px;
+	box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+	transition: border-color 0.2s ease;
+}
+.go-studio-card:hover {
+	border-color: rgba(255,255,255,0.14);
+}
+
+.go-input {
+	height: 38px;
+	width: 100%;
+	background: rgba(8,9,14,0.7);
+	border: 1px solid rgba(255,255,255,0.1);
+	color: #f8fafc;
+	padding: 0 12px;
+	border-radius: 10px;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.84rem;
+	outline: none;
+	transition: border-color 0.18s ease;
+	box-sizing: border-box;
+}
+.go-input:focus {
+	border-color: rgba(56,189,248,0.6);
+}
+</style>
+
+<div id="tab-go_config" class="tab-content" style="padding: 10px 0;">
+	<!-- Header Card & Active Engine Banner -->
+	<div class="go-studio-card" style="margin-bottom: 20px;">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(56,189,248,0.12); border:1px solid rgba(56,189,248,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:#38bdf8; font-size:1.6rem;">code</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.3rem; font-weight:700; color:#ffffff;">Go Runtime Configuration Engine</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Manage Go module proxy mirrors (<code style="color:#38bdf8; font-family:'JetBrains Mono';">GOPROXY</code>) and CGO cross-compilation mode.</p>
+				</div>
+			</div>
+
+			<!-- Target Status Badge -->
+			<div style="display:flex; align-items:center; gap:12px;">
+				<select id="go_config-version-select" class="go-input" onchange="loadGoStudio()" style="width:auto; min-width:180px; font-weight:600;">
+					<option value="global">Golang Global SDK</option>
+				</select>
+				<div style="padding:8px 14px; background:rgba(10,11,16,0.55); border:1px solid rgba(255,255,255,0.06); border-radius:10px; display:flex; align-items:center; gap:8px;">
+					<span class="material-symbols-outlined" style="color:#38bdf8; font-size:1.25rem;">verified</span>
+					<span style="font-size:0.88rem; color:#cbd5e1;">Active Target: <strong style="color:#ffffff;">Go SDK</strong></span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Form Sections Container -->
+	<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap:20px; margin-bottom:20px;">
+		
+		<!-- Card 1: Go Module Proxy (`GOPROXY`) -->
+		<div class="go-studio-card" style="display:flex; flex-direction:column; gap:16px; margin:0;">
+			<div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45);">dns</span>
+				<strong style="font-size:1rem; color:#f1f5f9;">Go Module Proxy Controller</strong>
+			</div>
+			<div style="display:flex; flex-direction:column; gap:14px;">
+				<div>
+					<label style="color:rgba(255,255,255,0.4); font-size:0.8rem; display:block; margin-bottom:6px;">Active Proxy Endpoint (<code style="color:#38bdf8;">GOPROXY</code>)</label>
+					<select id="go_config-proxy-select" class="go-input" onchange="onGoProxySelect()" style="cursor:pointer;">
+						<option value="https://proxy.golang.org,direct">Official Go Proxy (proxy.golang.org)</option>
+						<option value="https://goproxy.io,direct">Goproxy.io Global Mirror (Fast CDN)</option>
+						<option value="https://goproxy.cn,direct">Goproxy.cn China Mirror (High Speed)</option>
+						<option value="direct">Direct Mode (No Proxy / Direct VCS Fetch)</option>
+						<option value="custom">Custom Proxy String...</option>
+					</select>
+				</div>
+				<div id="go_config-custom-proxy-box" style="display:none;">
+					<label style="color:rgba(255,255,255,0.4); font-size:0.8rem; display:block; margin-bottom:6px;">Custom GOPROXY Value</label>
+					<input type="text" id="go_config-proxy-val" class="go-input" placeholder="https://myproxy.org,direct">
+				</div>
+				<div style="padding:12px; background:rgba(10,11,16,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:10px; color:#cbd5e1; font-size:0.8rem; line-height:1.5; display:flex; gap:8px; align-items:flex-start;">
+					<span class="material-symbols-outlined" style="font-size:1.1rem; color:rgba(255,255,255,0.45); flex-shrink:0;">info</span>
+					<span>Configures how <code style="color:#38bdf8;">go mod download</code> fetches modules and checksums across workspaces.</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Card 2: C Dependencies Mode (`CGO_ENABLED`) -->
+		<div class="go-studio-card" style="display:flex; flex-direction:column; gap:16px; margin:0;">
+			<div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,255,255,0.06); padding-bottom:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45);">build</span>
+				<strong style="font-size:1rem; color:#f1f5f9;">C Dependencies Mode (<code style="color:#38bdf8;">CGO_ENABLED</code>)</strong>
+			</div>
+			<div style="display:flex; flex-direction:column; gap:14px;">
+				<div>
+					<label style="color:rgba(255,255,255,0.4); font-size:0.8rem; display:block; margin-bottom:6px;">CGO Execution State</label>
+					<select id="go_config-cgo-select" class="go-input" style="cursor:pointer;">
+						<option value="0">CGO_ENABLED=0 (Developer Default / Pure Go Fast Build)</option>
+						<option value="1">CGO_ENABLED=1 (Requires MinGW / C Compiler in Windows)</option>
+					</select>
+				</div>
+				<div style="padding:12px; background:rgba(10,11,16,0.5); border:1px solid rgba(255,255,255,0.06); border-radius:10px; color:#cbd5e1; font-size:0.8rem; line-height:1.5; display:flex; gap:8px; align-items:flex-start;">
+					<span class="material-symbols-outlined" style="font-size:1.1rem; color:#38bdf8; flex-shrink:0;">verified</span>
+					<span><code style="color:#38bdf8;">CGO_ENABLED=0</code> produces standalone portable binaries on Windows without external gcc dependencies.</span>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Maintenance & Cache Operations -->
+	<div class="go-studio-card" style="margin-bottom:20px;">
+		<div style="display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+			<div style="display:flex; align-items:center; gap:12px;">
+				<div style="width:40px; height:40px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.3rem;">cleaning_services</span>
+				</div>
+				<div>
+					<strong style="color:#ffffff; font-size:0.98rem;">Go Cache Maintenance</strong>
+					<div style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin-top:2px;">Execute <code style="color:#38bdf8; font-family:'JetBrains Mono';">go clean -cache -modcache</code> to wipe object build artifacts and downloaded module cache.</div>
+				</div>
+			</div>
+			<button id="btn-clean-go_config-cache" class="pd-btn" onclick="cleanGoCache()" style="height:38px; padding:0 18px; font-size:0.84rem; background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.14); color:#f8fafc;">
+				<span class="material-symbols-outlined" style="font-size:1.1rem;">delete_sweep</span> Clean Go Cache
+			</button>
+		</div>
+	</div>
+
+	<!-- Bottom Action Bar -->
+	<div class="go-studio-card" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+		<div>
+			<strong style="color:#ffffff; font-size:0.98rem;">Ready to Apply Changes?</strong>
+			<div style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin-top:2px;">Modifications will immediately update system-wide Go compiler execution parameters.</div>
+		</div>
+		<div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+			<button class="pd-btn-danger" onclick="restoreGoDefaults()">
+				<span class="material-symbols-outlined" style="font-size:1.1rem;">restart_alt</span> Factory Reset
+			</button>
+			<button class="pd-btn-primary" onclick="saveGoConfig()">
+				<span class="material-symbols-outlined" style="font-size:1.1rem;">save</span> Save Configuration
+			</button>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,65 @@
+<header class="topbar">
+	<div class="topbar-left">
+		<span class="material-symbols-outlined" style="font-size: 1.4rem; color: rgb(33, 114, 219);">dns</span>
+		<span id="topbar-engine-name">V-CoPanel Bridge</span>
+		<span id="topbar-engine-version"
+			style="font-size:0.72rem; color:rgba(255,255,255,0.3); font-family:'JetBrains Mono',monospace; margin-left:6px; align-self:center;"></span>
+		<!-- Live project counter chip -->
+		<span id="topbar-project-chip"
+			style="display:none; background:rgba(59,130,246,0.1); border:1px solid rgba(59,130,246,0.25); border-radius:8px; padding:2px 10px; font-size:0.72rem; color:#60a5fa; margin-left:10px; cursor:pointer;"
+			onclick="switchTab('tab-projects')" title="View all projects">
+			<span id="topbar-project-count">0</span> Projects
+			<span id="topbar-running-count" style="display:none; color:#34b478; margin-left:4px;">· <span
+					id="topbar-running-val">0</span> Running</span>
+		</span>
+	</div>
+
+	<div class="topbar-metrics">
+		<!-- MariaDB Indicator -->
+		<div class="metric-chip" onclick="switchTab('tab-mariadb_config')" style="cursor:pointer;"
+			title="Click to manage MariaDB">
+			<span id="dot-mariadb" class="status-dot" style="background:#ef4444;"></span>
+			<span>MariaDB: <strong id="txt-mariadb" style="color:rgba(255,255,255,0.4);">–</strong></span>
+		</div>
+
+		<!-- Redis Indicator -->
+		<div class="metric-chip" onclick="switchTab('tab-redis_config')" style="cursor:pointer;"
+			title="Click to manage Redis Cache">
+			<span id="dot-redis" class="status-dot" style="background:#ef4444;"></span>
+			<span>Redis: <strong id="txt-redis" style="color:rgba(255,255,255,0.4);">–</strong></span>
+		</div>
+
+		<!-- Mailpit Indicator -->
+		<div class="metric-chip" onclick="switchTab('tab-mailpit_config')" style="cursor:pointer;"
+			title="Click to manage Mailpit Mailbox">
+			<span id="dot-mailpit" class="status-dot" style="background:#ef4444;"></span>
+			<span>Mailpit: <strong id="txt-mailpit" style="color:rgba(255,255,255,0.4);">–</strong></span>
+		</div>
+
+		<!-- phpMyAdmin Indicator -->
+		<div class="metric-chip" onclick="switchTab('tab-mariadb_config')" style="cursor:pointer;"
+			title="Click to manage phpMyAdmin">
+			<span id="dot-pma" class="status-dot" style="background:#ef4444;"></span>
+			<span>phpMyAdmin: <strong id="txt-pma" style="color:rgba(255,255,255,0.4);">–</strong></span>
+		</div>
+
+		<!-- RAM Load Indicator -->
+		<div class="metric-chip" onclick="switchTab('tab-vcopanel_engine'); switchEngineTab('performance');"
+			style="cursor:pointer; transition:all 0.2s ease;"
+			onmouseover="this.style.background='rgba(79,193,241,0.1)'; this.style.borderColor='rgba(79,193,241,0.3)';"
+			onmouseout="this.style.background=''; this.style.borderColor='';" title="Click to view System Telemetry">
+			<span class="material-symbols-outlined" style="font-size:1.1em; color:rgb(79, 193, 241);">memory</span>
+			<span>RAM: <strong id="header-ram-val">0%</strong></span>
+		</div>
+
+		<!-- Shutdown Control -->
+		<button class="metric-chip"
+			style="background:rgba(239, 68, 68, 0.12); border-color:rgba(239, 68, 68, 0.3); color:#f87171; cursor:pointer; transition:all 0.2s ease; box-shadow: 0 0 10px rgba(239,68,68,0.1);"
+			onmouseover="this.style.background='rgba(239,68,68,0.25)'; this.style.boxShadow='0 0 15px rgba(239,68,68,0.3)';"
+			onmouseout="this.style.background='rgba(239, 68, 68, 0.12)'; this.style.boxShadow='0 0 10px rgba(239,68,68,0.1)';"
+			onclick="shutdownSystem()" title="Safely terminate all daemons and databases">
+			<span class="material-symbols-outlined" style="font-size:1.1em; color:#ef4444;">power_settings_new</span>
+			<span style="font-weight:600; letter-spacing:0.5px;">SHUTDOWN</span>
+		</button>
+	</div>
+</header>

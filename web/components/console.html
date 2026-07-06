@@ -1,0 +1,12 @@
+<div class="terminal-dock" id="terminal-dock">
+	<div class="dock-header">
+		<span style="display:flex; align-items:center; gap:8px;"><span class="material-symbols-outlined">terminal</span> Execution Console</span>
+		<div style="display:flex; gap:10px; align-items:center;">
+			<button class="metric-chip" style="padding: 4px 12px; font-size: 0.76rem;" onclick="clearLogs()"><span class="material-symbols-outlined" style="font-size:1.1em; color:#fbbf24;">clear_all</span> Clear Console</button>
+			<button class="metric-chip" id="dock-toggle-btn" style="padding: 4px 12px; font-size: 0.76rem;" onclick="toggleDock()"><span class="material-symbols-outlined" style="font-size:1.1em; color:#60a5fa;">keyboard_arrow_down</span> Collapse Dock</button>
+		</div>
+	</div>
+	<div class="dock-body" id="dock-logs-output">
+		[Ready] Console initialized. Real-time output from system services and executed commands will stream below...
+	</div>
+</div>

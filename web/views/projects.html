@@ -1,0 +1,188 @@
+<style>
+.proj-studio-card {
+	background: linear-gradient(160deg, rgba(28,32,44,0.7) 0%, rgba(18,20,28,0.5) 100%);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 16px;
+	padding: 22px;
+	box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+	transition: border-color 0.2s ease;
+}
+.proj-studio-card:hover {
+	border-color: rgba(255,255,255,0.14);
+}
+.modal-overlay {
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: rgba(0,0,0,0.7);
+	backdrop-filter: blur(8px);
+	z-index: 9999;
+	display: none;
+	align-items: center;
+	justify-content: center;
+}
+.modal-box {
+	background: linear-gradient(160deg, #1e2330 0%, #12151e 100%);
+	border: 1px solid rgba(255,255,255,0.12);
+	border-radius: 18px;
+	padding: 28px;
+	width: 100%;
+	max-width: 440px;
+	box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+}
+</style>
+
+<div id="tab-projects" class="tab-content active" style="padding: 10px 0;">
+	<!-- Workspace Scanner Card -->
+	<div id="workspace-card" class="proj-studio-card" style="margin-bottom:24px; transition: all 0.3s ease;">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:14px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:#60a5fa; font-size:1.6rem;">folder_special</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.25rem; font-weight:700; color:#ffffff;">Workspace Root Directory</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Specify the system path to discover projects. To extract engines or verify runtimes, use the <a href="javascript:void(0)" onclick="switchTab('tab-vcopanel_engine')" style="color:#60a5fa; text-decoration:underline;">V-CoPanel Engine</a> screen.</p>
+				</div>
+			</div>
+			<span class="badge badge-active"><span class="material-symbols-outlined" style="font-size:1.1em;">check_circle</span> Discovery Enabled</span>
+		</div>
+
+		<div style="display:flex; gap:12px; align-items:center; flex-wrap:wrap;">
+			<input type="text" id="workspace-input" style="flex:1; min-width:260px; height:44px; background:rgba(8,9,14,0.7); border:1px solid rgba(255,255,255,0.1); color:#f8fafc; padding:0 14px; border-radius:10px; font-family:'JetBrains Mono', monospace; font-size:0.9rem; outline:none; cursor:pointer;" placeholder="Click 'Browse Folder' to select directory" readonly onclick="setWorkspaceRoot()">
+			<button id="btn-browse-folder" class="pd-btn-primary" style="height:44px; padding:0 24px; font-size:0.88rem;" onclick="setWorkspaceRoot()">
+				<span class="material-symbols-outlined" style="font-size:1.2rem;">folder_open</span> Browse Folder
+			</button>
+		</div>
+	</div>
+
+	<!-- Detected Applications Header -->
+	<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px; margin:0 0 16px;">
+		<div style="display:flex; align-items:center; gap:10px;">
+			<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.4rem;">grid_view</span>
+			<h3 style="font-size:1.15rem; font-weight:700; color:#fff; margin:0;">Detected Applications</h3>
+		</div>
+		<div style="display:flex; gap:10px; align-items:center;">
+			<button class="pd-btn-primary" style="height:38px; padding:0 18px; font-size:0.85rem; font-weight:600;" onclick="openAdvancedScaffoldModal()">
+				<span class="material-symbols-outlined" style="font-size:1.2rem;">add_circle</span> Create New Project
+			</button>
+			<button class="pd-btn" style="height:38px; padding:0 16px; font-size:0.82rem;" onclick="scanWorkspaceProjects()">
+				<span class="material-symbols-outlined" style="font-size:1.1em;">radar</span> Scan Workspace
+			</button>
+		</div>
+	</div>
+
+	<!-- Projects Container -->
+	<div id="projects-cards-container" style="display:flex; flex-direction:column; gap:16px;">
+		<div class="proj-studio-card" style="text-align:center; padding:50px 20px;">
+			<span class="material-symbols-outlined" style="font-size:3.2rem; color:rgba(255,255,255,0.2); margin-bottom:14px; display:block;">folder_off</span>
+			<h3 style="color:#fff; margin-bottom:8px; font-size:1.2rem;">Scanning Applications...</h3>
+			<p style="color:rgba(255,255,255,0.4); font-size:0.9rem;">Please wait while the discovery engine analyzes your workspace.</p>
+		</div>
+	</div>
+</div>
+
+<!-- Glassmorphic Advanced Project Scaffolding Modal -->
+<div id="scaffold-modal" class="modal-overlay">
+	<div class="modal-box" style="max-width:540px; background:linear-gradient(160deg, rgba(30,35,48,0.92) 0%, rgba(18,21,30,0.95) 100%); backdrop-filter:blur(24px); border:1px solid rgba(255,255,255,0.14); box-shadow:0 24px 60px rgba(0,0,0,0.65);">
+		<div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:20px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:14px;">
+			<div style="display:flex; align-items:center; gap:10px;">
+				<span class="material-symbols-outlined" style="color:#60a5fa; font-size:1.6rem;">rocket_launch</span>
+				<h3 style="margin:0; font-size:1.2rem; color:#fff; font-weight:700;">Create Starter Project</h3>
+			</div>
+			<button onclick="closeScaffoldModal()" style="background:none; border:none; color:rgba(255,255,255,0.5); cursor:pointer;">
+				<span class="material-symbols-outlined" style="font-size:1.4rem;">close</span>
+			</button>
+		</div>
+
+		<div id="scaffold-form-content">
+			<!-- Storage Location & Format Indicator -->
+			<div id="scaffold-storage-info" style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:14px; margin-bottom:18px; display:flex; flex-direction:column; gap:8px;">
+				<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+					<span style="font-size:0.78rem; font-weight:700; color:rgba(255,255,255,0.45); letter-spacing:0.5px;">TARGET STORAGE LOCATION</span>
+					<span class="badge" style="background:rgba(59,130,246,0.12); color:#60a5fa; border:1px solid rgba(59,130,246,0.25); font-size:0.72rem;">Zero-Dependency Sandbox</span>
+				</div>
+				<div style="font-family:'JetBrains Mono', monospace; font-size:0.85rem; color:#fff; background:rgba(8,9,14,0.7); padding:10px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06); word-break:break-all;">
+					📁 <span id="scaffold-target-path-preview">C:/Projects/my-awesome-app</span>
+				</div>
+				<div style="font-size:0.78rem; color:rgba(255,255,255,0.5); line-height:1.5;">
+					<strong style="color:#cbd5e1;">Generated Structure:</strong> Framework starter files + <code style="color:#93c5fd;">.vcopanel-runtime.json</code> (stack & DB binding) + <code style="color:#93c5fd;">.tools-version</code> (asdf/mise lock).
+				</div>
+			</div>
+
+			<!-- Project Name -->
+			<div style="margin-bottom:16px;">
+				<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.85rem; font-weight:600; margin-bottom:6px;">Project Directory Name (English letters, numbers, hyphens)</label>
+				<input type="text" id="scaffold-name" style="width:100%; height:42px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; color:#fff; padding:0 14px; font-family:'JetBrains Mono', monospace; font-size:0.9rem; box-sizing:border-box; outline:none;" placeholder="e.g. my-awesome-app" oninput="validateProjectNameInput(this)">
+				<small id="scaffold-name-error" style="color:#f87171; font-size:0.75rem; display:none;">Only English letters, digits, and hyphens allowed (no spaces).</small>
+			</div>
+
+			<!-- Project Template / Stack Selection -->
+			<div style="margin-bottom:16px;">
+				<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.85rem; font-weight:600; margin-bottom:6px;">Framework / Template</label>
+				<select id="scaffold-stack" style="width:100%; height:42px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; color:#fff; padding:0 14px; font-size:0.9rem; box-sizing:border-box; outline:none;" onchange="onStackChanged()">
+					<option value="laravel">Laravel Starter (PHP / Node.js / MariaDB)</option>
+					<option value="node">Node.js Starter (Vanilla Node Server)</option>
+					<option value="go">Go Starter (Compiled HTTP Server)</option>
+					<option value="empty">Empty Project (Extensions only)</option>
+				</select>
+			</div>
+
+			<!-- Port & Collation Row -->
+			<div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-bottom:16px;">
+				<div>
+					<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.85rem; font-weight:600; margin-bottom:6px;">Development Port</label>
+					<input type="number" id="scaffold-port" style="width:100%; height:42px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; color:#fff; padding:0 14px; font-family:'JetBrains Mono', monospace; font-size:0.9rem; box-sizing:border-box; outline:none;" value="8000">
+				</div>
+				<div>
+					<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.85rem; font-weight:600; margin-bottom:6px;">Database Collation</label>
+					<select id="scaffold-collation" style="width:100%; height:42px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:10px; color:#fff; padding:0 14px; font-size:0.85rem; box-sizing:border-box; outline:none;">
+						<option value="utf8mb4_unicode_ci">utf8mb4_unicode_ci (Persian/Multi-language Default)</option>
+						<option value="utf8mb4_general_ci">utf8mb4_general_ci</option>
+						<option value="utf8mb4_persian_ci">utf8mb4_persian_ci</option>
+						<option value="utf8_general_ci">utf8_general_ci</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- Dynamic Runtime Versions Row -->
+			<div id="scaffold-runtimes-section" style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px; margin-bottom:20px; background:rgba(255,255,255,0.03); padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.06);">
+				<div id="runtime-php-box">
+					<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.8rem; font-weight:600; margin-bottom:6px;">PHP Version</label>
+					<select id="scaffold-php-ver" style="width:100%; height:38px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:#fff; padding:0 12px; font-size:0.85rem; box-sizing:border-box; outline:none;">
+						<option value="">Loading versions...</option>
+					</select>
+				</div>
+				<div id="runtime-node-box">
+					<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.8rem; font-weight:600; margin-bottom:6px;">Node.js Version</label>
+					<select id="scaffold-node-ver" style="width:100%; height:38px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:#fff; padding:0 12px; font-size:0.85rem; box-sizing:border-box; outline:none;">
+						<option value="">Loading versions...</option>
+					</select>
+				</div>
+				<div id="runtime-go-box">
+					<label style="display:block; color:rgba(255,255,255,0.8); font-size:0.8rem; font-weight:600; margin-bottom:6px;">Go Version</label>
+					<select id="scaffold-go-ver" style="width:100%; height:38px; background:rgba(8,9,14,0.8); border:1px solid rgba(255,255,255,0.15); border-radius:8px; color:#fff; padding:0 12px; font-size:0.85rem; box-sizing:border-box; outline:none;">
+						<option value="">Loading versions...</option>
+					</select>
+				</div>
+			</div>
+
+			<!-- Buttons -->
+			<div style="display:flex; justify-content:flex-end; gap:10px; border-top:1px solid rgba(255,255,255,0.08); padding-top:16px;">
+				<button class="pd-btn" onclick="closeScaffoldModal()" style="height:40px; padding:0 18px;">Cancel</button>
+				<button id="btn-submit-scaffold" class="pd-btn-primary" onclick="submitAdvancedScaffold()" style="height:40px; padding:0 24px; font-weight:600;">
+					<span class="material-symbols-outlined" style="font-size:1.1rem; vertical-align:middle; margin-right:4px;">rocket_launch</span> Create Project
+				</button>
+			</div>
+		</div>
+
+		<!-- Loading Spinner State -->
+		<div id="scaffold-loading-state" style="display:none; text-align:center; padding:36px 14px;">
+			<div class="spinner" style="border:3px solid rgba(255,255,255,0.1); border-top-color:#60a5fa; width:44px; height:44px; border-radius:50%; animation:spin 0.8s linear infinite; margin:0 auto 16px;"></div>
+			<h4 style="color:#fff; font-size:1.1rem; margin:0 0 6px;">Creating &amp; Configuring Project...</h4>
+			<p style="color:rgba(255,255,255,0.5); font-size:0.85rem; margin:0;">Creating directories, generating config stubs, and setting up database collation.</p>
+		</div>
+		</div>
+	</div>
+</div>
+
