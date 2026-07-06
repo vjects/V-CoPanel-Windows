@@ -1,0 +1,71 @@
+<aside class="sidebar" id="app-sidebar">
+	<div>
+		<div class="sidebar-brand">
+			<div style="display:flex; align-items:center; gap:14px; overflow:hidden; cursor:pointer; transition:opacity 0.2s;" onclick="switchTab('tab-projects')" title="Go to Project Workspaces" onmouseover="this.style.opacity='0.8'" onmouseout="this.style.opacity='1'">
+				<div class="brand-logo" style="background:transparent; box-shadow:none; padding:0; overflow:hidden;"><img src="/logo.png" alt="V-CoPanel Logo" style="width:100%; height:100%; object-fit:contain; border-radius:10px;"></div>
+				<div class="brand-text">
+					<h1>V-CoPanel</h1>
+					<span>WinPro Edition</span>
+				</div>
+			</div>
+			<button id="sidebar-toggle-btn" onclick="toggleSidebarCollapse()" title="Toggle Mini Sidebar"
+				style="background:rgba(255,255,255,0.06); border:1px solid rgba(255,255,255,0.1); color:#cbd5e1; border-radius:8px; width:30px; height:30px; display:flex; align-items:center; justify-content:center; cursor:pointer; flex-shrink:0; transition:all 0.2s;">
+				<span class="material-symbols-outlined" id="sidebar-toggle-icon"
+					style="font-size:1.1rem;">keyboard_double_arrow_left</span>
+			</button>
+		</div>
+
+		<div class="nav-section">
+			<div class="nav-section-title">CORE DASHBOARD</div>
+			<div class="nav-menu">
+				<button class="nav-item active" onclick="switchTab('tab-projects')" title="Project Workspaces">
+					<span class="material-symbols-outlined">dashboard</span>
+					<span class="nav-label">Project Workspaces</span>
+				</button>
+			</div>
+		</div>
+
+		<div class="nav-section">
+			<div class="nav-section-title">RUNTIME ENGINE</div>
+			<div class="nav-menu" id="sidebar-runtimes-menu">
+				<div style="padding: 8px 14px; font-size: 0.8rem; color: rgba(255,255,255,0.4);">Loading runtimes...</div>
+			</div>
+		</div>
+
+		<div class="nav-section">
+			<div class="nav-section-title">SHARED SERVICES</div>
+			<div class="nav-menu">
+				<button class="nav-item" onclick="switchTab('tab-mariadb_config')" title="MariaDB & PhpMyAdmin Shared Service">
+					<span class="material-symbols-outlined">database</span>
+					<span class="nav-label">MariaDB & PhpMyAdmin</span>
+				</button>
+				<button class="nav-item" onclick="switchTab('tab-redis_config')" title="Redis / Valkey Cache Service">
+					<span class="material-symbols-outlined">memory</span>
+					<span class="nav-label">Redis / Valkey</span>
+				</button>
+				<button class="nav-item" onclick="switchTab('tab-mailpit_config')" title="Mailpit Testing Mailbox Service">
+					<span class="material-symbols-outlined">mail</span>
+					<span class="nav-label">Mailbox (Mailpit)</span>
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="sidebar-footer" style="padding: 12px; background: rgba(15,17,24,0.65); border-top: 1px solid rgba(255,255,255,0.08);">
+		<button onclick="switchTab('tab-vcopanel_engine')" title="V-CoPanel Engine (Universal System Telemetry & Recovery)" 
+			style="width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 10px 12px; background: linear-gradient(135deg, rgba(255,255,255,0.09) 0%, rgba(255,255,255,0.03) 100%); border: 1px solid rgba(255,255,255,0.18); border-radius: 12px; color: #ffffff; cursor: pointer; transition: all 0.25s ease; box-shadow: 0 4px 15px rgba(0,0,0,0.4);">
+			<div style="display: flex; align-items: center; gap: 10px; overflow: hidden; text-align: left;">
+				<div style="width: 32px; height: 32px; border-radius: 8px; background: rgba(255,255,255,0.12); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+					<span class="material-symbols-outlined" style="color: #fff; font-size: 1.25rem;">dns</span>
+				</div>
+				<div class="brand-text" style="overflow: hidden;">
+					<strong style="display: block; font-size: 0.88rem; font-weight: 700; color: #fff; letter-spacing: 0.3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">V-CoPanel Engine</strong>
+					<span style="display: block; font-size: 0.72rem; color: rgba(255,255,255,0.5); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">System Core & Recovery</span>
+				</div>
+			</div>
+			<div style="display: flex; align-items: center; gap: 6px; flex-shrink: 0;">
+				<span class="status-dot" style="background: #10b981; box-shadow: 0 0 8px #10b981;"></span>
+			</div>
+		</button>
+	</div>
+</aside>

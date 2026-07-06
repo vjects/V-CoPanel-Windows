@@ -1,0 +1,258 @@
+<style>
+/* ─── MariaDB & PhpMyAdmin Shared Service — Unified Glass System ──────────
+   Palette : Standard Glassmorphism (#3b82f6 blue accents)
+   Icons   : rgba(255,255,255,0.45) (Uniform, no-rainbow rule)
+   Naming  : service-config-card (No Studio rule)
+──────────────────────────────────────────────────────────────────────────── */
+
+.service-config-card {
+	background: linear-gradient(160deg, rgba(28,32,44,0.7) 0%, rgba(18,20,28,0.5) 100%);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 16px;
+	padding: 22px;
+	box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+	transition: border-color 0.2s ease;
+	margin-bottom: 20px;
+}
+.service-config-card:hover {
+	border-color: rgba(255,255,255,0.14);
+}
+
+.db-cred-box {
+	background: rgba(10,11,16,0.55);
+	border: 1px solid rgba(255,255,255,0.06);
+	border-radius: 12px;
+	padding: 14px 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.db-tab-btn {
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.08);
+	color: rgba(255,255,255,0.6);
+	padding: 6px 14px;
+	border-radius: 8px;
+	font-size: 0.8rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+.db-tab-btn:hover {
+	background: rgba(255,255,255,0.08);
+	color: #ffffff;
+}
+.db-tab-btn.active {
+	background: rgba(255,255,255,0.15);
+	border-color: rgba(255,255,255,0.3);
+	color: #ffffff;
+}
+
+.tuning-select {
+	background: rgba(10,11,16,0.8);
+	border: 1px solid rgba(255,255,255,0.12);
+	color: #f8fafc;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.85rem;
+	width: 100%;
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+.tuning-select:focus {
+	border-color: #3b82f6;
+}
+</style>
+
+<div id="tab-mariadb_config" class="tab-content" style="padding: 10px 0;">
+	<!-- Card 1: MariaDB & PhpMyAdmin Shared Infrastructure Service -->
+	<div class="service-config-card">
+		<div style="display:flex; align-items:center; gap:14px; margin-bottom:16px;">
+			<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.6rem;">database</span>
+			</div>
+			<div>
+				<h2 style="margin:0; font-size:1.25rem; font-weight:700; color:#ffffff;">MariaDB & PhpMyAdmin Shared Infrastructure Service</h2>
+				<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Central MySQL-compatible database daemon (<strong style="color:#cbd5e1;">Port 3306</strong>) & Web Administration UI (<strong style="color:#cbd5e1;">Port 8081</strong>) shared across all workspaces.</p>
+			</div>
+		</div>
+
+		<!-- Credentials Grid -->
+		<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:14px; margin-bottom:10px;">
+			<div class="db-cred-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">Host Address</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:1rem;">127.0.0.1</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('127.0.0.1', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+			<div class="db-cred-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">Database Port</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:1rem;">3306</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('3306', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+			<div class="db-cred-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">Admin Username</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:1rem;">admin</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('admin', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+			<div class="db-cred-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">Admin Password</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:0.86rem;">Admin_VCoPanel_2026!</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('Admin_VCoPanel_2026!', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Card 2: phpMyAdmin Web Administration Server -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.6rem;">table_view</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.2rem; font-weight:700; color:#ffffff;">phpMyAdmin Database Management (Port 8081)</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Dedicated web interface for MySQL/MariaDB schema administration, SQL queries, and table maintenance.</p>
+				</div>
+			</div>
+
+			<div style="display:flex; align-items:center; gap:16px;">
+				<div style="display:flex; align-items:center; gap:8px; background:rgba(0,0,0,0.3); padding:6px 12px; border-radius:8px; border:1px solid rgba(255,255,255,0.06);">
+					<span id="dot-pma-inner" style="width:10px; height:10px; border-radius:50%; background:rgb(250,172,80); display:inline-block;"></span>
+					<span style="font-size:0.78rem; color:rgba(255,255,255,0.5);">Port: <strong id="txt-pma-inner" style="color:var(--text-secondary); font-family:'JetBrains Mono';">Idle</strong></span>
+				</div>
+				<div id="pma-control-box">
+					<button class="pd-btn-primary" id="btn-pma-start" onclick="startPMA()"><span class="material-symbols-outlined">play_arrow</span> Start phpMyAdmin Server</button>
+					<div id="pma-running-buttons" style="display: none; gap: 10px; align-items: center;">
+						<a href="http://127.0.0.1:8881" id="pma-webui-link" target="_blank" class="pd-btn-success" style="text-decoration:none; display:flex; align-items:center; gap:6px;"><span class="material-symbols-outlined">open_in_new</span> Open phpMyAdmin UI (8881)</a>
+						<button class="pd-btn-danger" onclick="stopPMA()"><span class="material-symbols-outlined">stop_circle</span> Stop Server</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Card 3: Multi-Language Connection Generator (Tool Item 1) -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:16px;">
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.5rem;">data_object</span>
+				<div>
+					<h3 style="margin:0; font-size:1.05rem; font-weight:700; color:#ffffff;">Multi-Language Connection Config Generator</h3>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin:2px 0 0 0;">Generate and copy ready-to-use database connection snippets for your target application stack.</p>
+				</div>
+			</div>
+			<div style="display:flex; gap:8px;">
+				<button class="db-tab-btn active" id="db-tab-btn-laravel" onclick="switchDBConfigTab('laravel')"><span class="material-symbols-outlined" style="font-size:1rem;">php</span> Laravel / PHP (.env)</button>
+				<button class="db-tab-btn" id="db-tab-btn-node" onclick="switchDBConfigTab('node')"><span class="material-symbols-outlined" style="font-size:1rem;">javascript</span> Node.js (JSON)</button>
+				<button class="db-tab-btn" id="db-tab-btn-go" onclick="switchDBConfigTab('go')"><span class="material-symbols-outlined" style="font-size:1rem;">code</span> Go (DSN)</button>
+			</div>
+		</div>
+
+		<!-- Block: Laravel / PHP -->
+		<div id="db-block-laravel" style="display:block;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyDBConfig('laravel', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Laravel Block</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_app_name
+DB_USERNAME=admin
+DB_PASSWORD=Admin_VCoPanel_2026!</pre>
+		</div>
+
+		<!-- Block: Node.js -->
+		<div id="db-block-node" style="display:none;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyDBConfig('node', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Node JSON</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">{
+  "host": "127.0.0.1",
+  "port": 3306,
+  "user": "admin",
+  "password": "Admin_VCoPanel_2026!",
+  "database": "your_app_name",
+  "connectionLimit": 10,
+  "charset": "utf8mb4"
+}</pre>
+		</div>
+
+
+
+		<!-- Block: Go -->
+		<div id="db-block-go" style="display:none;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyDBConfig('go', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Go DSN</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">// database/sql with go-sql-driver/mysql
+dsn := "admin:Admin_VCoPanel_2026!@tcp(127.0.0.1:3306)/your_app_name?charset=utf8mb4&parseTime=True&loc=Local"</pre>
+		</div>
+	</div>
+
+	<!-- Card 4: MariaDB Performance & Configuration Matrix (Tool Item 2) -->
+	<div class="service-config-card" style="margin-bottom:0;">
+		<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.5rem;">tune</span>
+				<div>
+					<h3 style="margin:0; font-size:1.05rem; font-weight:700; color:#ffffff;">MariaDB Performance & Configuration Matrix (`my.ini`)</h3>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin:2px 0 0 0;">Adjust core database engine parameters and memory allocations for local development.</p>
+				</div>
+			</div>
+			<button class="pd-btn-primary" onclick="saveMariaDBTuning()"><span class="material-symbols-outlined" style="font-size:1rem;">save</span> Apply Tuning Profile</button>
+		</div>
+
+		<div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:16px;">
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">InnoDB Buffer Pool Size</label>
+				<select class="tuning-select" id="prm-innodb-buffer">
+					<option value="64M">64 MB (Ultra Low RAM)</option>
+					<option value="128M">128 MB (Minimum Dev)</option>
+					<option value="256M">256 MB (Low RAM)</option>
+					<option value="512M" selected>512 MB (Default)</option>
+					<option value="1024M">1024 MB (Standard Dev)</option>
+					<option value="2048M">2048 MB (High Performance)</option>
+				</select>
+			</div>
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">Max Connections</label>
+				<select class="tuning-select" id="prm-max-conn">
+					<option value="100">100 Connections</option>
+					<option value="250" selected>250 Connections (Default)</option>
+					<option value="500">500 Connections</option>
+					<option value="1000">1000 Connections</option>
+				</select>
+			</div>
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">Default Character Set</label>
+				<select class="tuning-select" id="prm-charset">
+					<option value="utf8mb4" selected>utf8mb4 (Unicode 4-byte)</option>
+					<option value="utf8">utf8 (Unicode 3-byte)</option>
+					<option value="latin1">latin1 (Standard ISO)</option>
+				</select>
+			</div>
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">Default Collation</label>
+				<select class="tuning-select" id="prm-collation">
+					<option value="utf8mb4_unicode_ci" selected>utf8mb4_unicode_ci (Default)</option>
+					<option value="utf8mb4_general_ci">utf8mb4_general_ci (Fast)</option>
+					<option value="utf8mb4_bin">utf8mb4_bin (Binary)</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>

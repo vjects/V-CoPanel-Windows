@@ -1,0 +1,248 @@
+<style>
+/* ─── Redis / Valkey Cache Shared Service — Unified Glass System ──────────
+   Palette : Standard Glassmorphism (#3b82f6 blue accents)
+   Icons   : rgba(255,255,255,0.45) (Uniform, no-rainbow rule)
+   Naming  : service-config-card (No Studio rule)
+──────────────────────────────────────────────────────────────────────────── */
+
+.service-config-card {
+	background: linear-gradient(160deg, rgba(28,32,44,0.7) 0%, rgba(18,20,28,0.5) 100%);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 16px;
+	padding: 22px;
+	box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+	transition: border-color 0.2s ease;
+	margin-bottom: 20px;
+}
+.service-config-card:hover {
+	border-color: rgba(255,255,255,0.14);
+}
+
+.redis-metric-box {
+	background: rgba(10,11,16,0.55);
+	border: 1px solid rgba(255,255,255,0.06);
+	border-radius: 12px;
+	padding: 14px 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.redis-tab-btn {
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.08);
+	color: rgba(255,255,255,0.6);
+	padding: 6px 14px;
+	border-radius: 8px;
+	font-size: 0.8rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+.redis-tab-btn:hover {
+	background: rgba(255,255,255,0.08);
+	color: #ffffff;
+}
+.redis-tab-btn.active {
+	background: rgba(255,255,255,0.15);
+	border-color: rgba(255,255,255,0.3);
+	color: #ffffff;
+}
+
+.tuning-select {
+	background: rgba(10,11,16,0.8);
+	border: 1px solid rgba(255,255,255,0.12);
+	color: #f8fafc;
+	padding: 8px 12px;
+	border-radius: 8px;
+	font-family: 'JetBrains Mono', monospace;
+	font-size: 0.85rem;
+	width: 100%;
+	outline: none;
+	transition: border-color 0.2s ease;
+}
+.tuning-select:focus {
+	border-color: #3b82f6;
+}
+</style>
+
+<div id="tab-redis_config" class="tab-content" style="padding: 10px 0;">
+	<!-- Card 1: Redis / Valkey Cache Shared Infrastructure Service -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:18px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.6rem;">memory</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.25rem; font-weight:700; color:#ffffff;">Redis / Valkey Cache & Message Broker Service</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">High-performance in-memory key-value store (<strong style="color:#cbd5e1;">Port 6379</strong>) shared across all workspaces.</p>
+				</div>
+			</div>
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span id="redis-status-badge" style="padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:600; background:rgba(255,255,255,0.1); color:#cbd5e1;">Checking...</span>
+				<button class="pd-btn" style="height:34px; padding:0 14px; font-size:0.78rem;" onclick="loadRedisConfig()"><span class="material-symbols-outlined" style="font-size:1rem;">refresh</span> Refresh Status</button>
+			</div>
+		</div>
+
+		<!-- Live Metrics & Connection Grid -->
+		<div style="display:grid; grid-template-columns:repeat(5, 1fr); gap:12px;">
+			<div class="redis-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.75rem; display:block; margin-bottom:6px;">Host Address</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:0.95rem;">127.0.0.1</strong>
+					<button class="pd-btn" style="height:26px; padding:0 8px; font-size:0.7rem;" onclick="copyText('127.0.0.1', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span></button>
+				</div>
+			</div>
+			<div class="redis-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.75rem; display:block; margin-bottom:6px;">Service Port</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:6px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:0.95rem;">6379</strong>
+					<button class="pd-btn" style="height:26px; padding:0 8px; font-size:0.7rem;" onclick="copyText('6379', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span></button>
+				</div>
+			</div>
+			<div class="redis-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.75rem; display:block; margin-bottom:6px;">Memory Used</small>
+				<strong id="redis-mem-use" style="color:#38bdf8; font-family:'JetBrains Mono'; font-size:1.05rem;">0 B</strong>
+			</div>
+			<div class="redis-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.75rem; display:block; margin-bottom:6px;">Connected Clients</small>
+				<strong id="redis-clients-count" style="color:#a855f7; font-family:'JetBrains Mono'; font-size:1.05rem;">0</strong>
+			</div>
+			<div class="redis-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.75rem; display:block; margin-bottom:6px;">Cached Keys (db0)</small>
+				<strong id="redis-keys-count" style="color:#34d399; font-family:'JetBrains Mono'; font-size:1.05rem;">0</strong>
+			</div>
+		</div>
+	</div>
+
+	<!-- Card 2: Service Control & Instant Cache Flush (FLUSHALL) -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.6rem;">settings_power</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.15rem; font-weight:700; color:#ffffff;">Daemon Control & Instant Cache Eviction</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Manage background daemon lifecycle or instantly flush all cached keys (<strong style="color:#cbd5e1;">FLUSHALL</strong>) across all databases.</p>
+				</div>
+			</div>
+
+			<div style="display:flex; align-items:center; gap:12px;">
+				<button class="pd-btn-primary" id="btn-redis-start" onclick="toggleRedis('start')"><span class="material-symbols-outlined">play_arrow</span> Start Server</button>
+				<button class="pd-btn-danger" id="btn-redis-stop" onclick="toggleRedis('stop')" style="display:none;"><span class="material-symbols-outlined">stop_circle</span> Stop Server</button>
+				<button class="pd-btn" id="btn-redis-flush" onclick="flushRedisCache()" style="background:rgba(239,68,68,0.15); border-color:rgba(239,68,68,0.35); color:#f87171;"><span class="material-symbols-outlined" style="color:#f87171;">delete_sweep</span> Flush All Cache (FLUSHALL)</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Card 3: Multi-Language Connection Config Generator -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:16px;">
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.5rem;">data_object</span>
+				<div>
+					<h3 style="margin:0; font-size:1.05rem; font-weight:700; color:#ffffff;">Multi-Language Connection Config Generator</h3>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin:2px 0 0 0;">Generate and copy ready-to-use Redis client connection snippets for your application stack.</p>
+				</div>
+			</div>
+			<div style="display:flex; gap:8px;">
+				<button class="redis-tab-btn active" id="redis-tab-btn-laravel" onclick="switchRedisConfigTab('laravel')"><span class="material-symbols-outlined" style="font-size:1rem;">php</span> Laravel / PHP (.env)</button>
+				<button class="redis-tab-btn" id="redis-tab-btn-node" onclick="switchRedisConfigTab('node')"><span class="material-symbols-outlined" style="font-size:1rem;">javascript</span> Node.js (ioredis)</button>
+				<button class="redis-tab-btn" id="redis-tab-btn-go" onclick="switchRedisConfigTab('go')"><span class="material-symbols-outlined" style="font-size:1rem;">code</span> Go (go-redis)</button>
+			</div>
+		</div>
+
+		<!-- Block: Laravel / PHP -->
+		<div id="redis-block-laravel" style="display:block;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyRedisConfig('laravel', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Laravel Block</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">REDIS_CLIENT=phpredis
+REDIS_HOST=127.0.0.1
+REDIS_PASSWORD=null
+REDIS_PORT=6379
+REDIS_DB=0
+CACHE_DRIVER=redis
+QUEUE_CONNECTION=redis
+SESSION_DRIVER=redis</pre>
+		</div>
+
+		<!-- Block: Node.js -->
+		<div id="redis-block-node" style="display:none;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyRedisConfig('node', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Node JSON</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">{
+  "host": "127.0.0.1",
+  "port": 6379,
+  "password": null,
+  "db": 0,
+  "keyPrefix": "app:",
+  "lazyConnect": false
+}</pre>
+		</div>
+
+
+
+		<!-- Block: Go -->
+		<div id="redis-block-go" style="display:none;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyRedisConfig('go', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Go Options</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">// go-redis/v9 Options
+rdb := redis.NewClient(&redis.Options{
+	Addr:	  "127.0.0.1:6379",
+	Password: "", // no password set
+	DB:		  0,  // use default DB
+})</pre>
+		</div>
+	</div>
+
+	<!-- Card 4: Redis Resource & Eviction Policy Tuning (redis.conf) -->
+	<div class="service-config-card" style="margin-bottom:0;">
+		<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.5rem;">tune</span>
+				<div>
+					<h3 style="margin:0; font-size:1.05rem; font-weight:700; color:#ffffff;">Redis Resource & Eviction Policy Tuning (`redis.conf`)</h3>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin:2px 0 0 0;">Configure memory limits and key eviction algorithms for local testing and background queue workers.</p>
+				</div>
+			</div>
+			<button class="pd-btn-primary" onclick="saveRedisTuning()"><span class="material-symbols-outlined" style="font-size:1rem;">save</span> Apply Tuning Profile</button>
+		</div>
+
+		<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:16px;">
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">Max Memory Limit (`maxmemory`)</label>
+				<select class="tuning-select" id="prm-redis-maxmem">
+					<option value="128mb">128 MB (Lightweight Dev)</option>
+					<option value="256mb" selected>256 MB (Default)</option>
+					<option value="512mb">512 MB (Standard Cache)</option>
+					<option value="1gb">1024 MB (Heavy Workloads)</option>
+				</select>
+			</div>
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">Eviction Policy (`maxmemory-policy`)</label>
+				<select class="tuning-select" id="prm-redis-policy">
+					<option value="noeviction" selected>noeviction (Default - Return Errors on Full)</option>
+					<option value="allkeys-lru">allkeys-lru (Evict Least Recently Used Keys)</option>
+					<option value="volatile-lru">volatile-lru (Evict LRU Keys with Expire Set)</option>
+					<option value="allkeys-lfu">allkeys-lfu (Evict Least Frequently Used Keys)</option>
+				</select>
+			</div>
+			<div>
+				<label style="display:block; color:rgba(255,255,255,0.6); font-size:0.8rem; margin-bottom:6px;">Security Auth (`requirepass`)</label>
+				<select class="tuning-select" id="prm-redis-auth">
+					<option value="none" selected>Disabled (No Password - Local Standard)</option>
+					<option value="required">Enabled (Require Admin Password)</option>
+				</select>
+			</div>
+		</div>
+	</div>
+</div>

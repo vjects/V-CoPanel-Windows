@@ -1,0 +1,186 @@
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  V-COPANEL PUBLIC & COMMERCIALIZATION LICENSE (VPCL)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  License Version : 2.0.1 — Dynamic (Subject to amendment by the Copyright Holder)
+  Copyright       : © 2026 VJECTS. All rights reserved.
+  Official Domain : https://vjects.com
+  Direct Contact  : Telegram @vjects — https://t.me/vjects
+  Repository      : https://github.com/vjects/V-CoPanel-Windows
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+
+PREAMBLE
+────────
+
+V-CoPanel is a portable, zero-dependency local development environment for
+Windows, engineered in pure Go by the VJECTS Architecture Team.
+
+This software is a fully self-funded, independent project. It was conceived,
+designed, architected, and shipped with zero external funding, zero corporate
+sponsorship, and zero third-party financial backing — entirely by its creator
+out of personal necessity and a deep frustration with the existing tools on
+the Windows platform.
+
+This license is designed to protect that independent creative effort, keep the
+core engine free and accessible to the community, preserve the integrity of
+the VJECTS brand, and establish a fair and transparent framework for any
+third-party developers who build substantial, meaningful additions on top of
+this foundation.
+
+
+SECTION 1 — DEFINITIONS
+────────────────────────
+
+"Software"          Refers to V-CoPanel and all its source code, compiled
+                    binaries, assets, documentation, and associated files
+                    as distributed in this repository.
+
+"Copyright Holder"  Refers exclusively to VJECTS (vjects.com), the sole
+                    creator and maintainer of the Software.
+
+"You" / "User"      Any individual or legal entity exercising permissions
+                    granted by this license.
+
+"Derivative Work"   Any modification, fork, or redistribution of the
+                    Software, whether partial or complete.
+
+"Commercial Use"    The sale, sublicensing, or fee-based distribution of
+                    the Software or any Derivative Work.
+
+"Official Domain"   vjects.com, the sole and exclusive authoritative web
+                    presence of VJECTS and this Software.
+
+
+SECTION 2 — PERMITTED USES
+───────────────────────────
+
+The following uses are explicitly permitted without restriction:
+
+  a) Cloning, downloading, viewing, and executing the Software for personal
+     or private development purposes.
+
+  b) Modifying the source code locally on your own machine for personal
+     use or private development workflows.
+
+  c) Sharing or redistributing unmodified or modified versions of the
+     Software at no charge, provided that ALL of the following conditions
+     are met without exception:
+       – All original copyright notices remain intact and unaltered.
+       – Full credit to VJECTS (vjects.com) is clearly visible.
+       – This license file is included verbatim and without modification.
+       – No claim of official status or affiliation with VJECTS is made.
+
+
+SECTION 3 — BRAND PROTECTION, AUTHORITY & AUTHENTICITY
+────────────────────────────────────────────────────────
+
+  a) TRADEMARK INTEGRITY
+     The names "V-CoPanel", "V-CoPanel Windows", "V-CoPanel Enterprise",
+     and "VJECTS" are proprietary trademarks of the Copyright Holder.
+     You are strictly prohibited from:
+       – Removing the official logo or application icon.
+       – Deleting or obscuring any VJECTS branding or credit from the UI.
+       – Using these trademarks to imply endorsement without written consent.
+
+  b) OFFICIAL DOMAIN & AUTHENTICITY AUTHORITY
+     The one and only official, authoritative web presence for this
+     Software and for VJECTS is:
+
+                         https://vjects.com
+
+     No third-party website, portal, support page, mirror, or distribution
+     channel may claim official status on behalf of this project or VJECTS,
+     unless it is a verified subdomain, microservice, or digital property
+     owned and operated directly by VJECTS. If an address is directly
+     connected to VJECTS (such as a microservice or official partner page),
+     it will be disclosed on the official website. Any other site claiming
+     affiliation is unauthorized.
+
+  c) NO UNAUTHORIZED REBRANDING
+     You are prohibited from publishing, distributing, or selling any
+     version of this Software under a completely different name that
+     removes or replaces the "V-CoPanel" identifier.
+
+
+SECTION 4 — FAIR COMMERCIALIZATION & THIRD-PARTY MONETIZATION
+───────────────────────────────────────────────────────────────
+
+The Copyright Holder believes in rewarding genuine, high-value contribution.
+Commercial sale or fee-based distribution of the Software or Derivative Works
+is PROHIBITED, except under the following strict conditions — all of which
+must be satisfied simultaneously:
+
+  a) SUBSTANTIVE ORIGINAL CONTRIBUTION
+     The Derivative Work must introduce at least one (1) major, independent,
+     and substantive new feature or service that is not present in any
+     official upstream release of V-CoPanel. The following categories
+     explicitly DO NOT qualify as substantive contributions:
+       – Minor bug fixes or dependency updates
+       – Visual reskinning, theme changes, or icon replacements
+       – Configuration file adjustments or parameter tuning
+       – Language translations or documentation additions
+       – Repackaging without functional additions
+
+  b) MANDATORY NAMING FORMAT
+     Any commercialized Derivative Work must retain "V-CoPanel" as its
+     base name and must follow this exact format:
+
+         V-CoPanel — [Developer or Company Name] Edition
+
+     Example: "V-CoPanel — Acme Edition"
+
+     It may not be sold under any other name that omits "V-CoPanel".
+
+  c) CREDIT & OPEN CORE REQUIREMENT
+     The commercial seller must:
+       – Prominently credit VJECTS (vjects.com) as the original author.
+       – Ensure that all features inherited from the official V-CoPanel
+         release remain free, accessible, and open-source within that
+         edition. Only the seller's own added value may be monetized.
+
+
+SECTION 5 — LICENSE AMENDMENTS & DYNAMIC VALIDITY
+───────────────────────────────────────────────────
+
+  a) RIGHT TO AMEND
+     VJECTS reserves the absolute, unilateral, and perpetual right to
+     modify, amend, update, strengthen, or revoke the terms of this
+     license at any time, at its sole discretion, with or without
+     prior notice.
+
+  b) LIVING DOCUMENT
+     This license is a living document. Its currently valid and binding
+     terms are always the version published at the official repository:
+
+         https://github.com/vjects/V-CoPanel-Windows
+
+     Any Derivative Work, fork, or commercial edition of this Software
+     is automatically bound by the most recently published version of
+     this license, regardless of the version in effect at the time
+     the Derivative Work was created.
+
+  c) VALIDITY PERIOD
+     This license remains in force indefinitely, until superseded by
+     a new version published by the Copyright Holder.
+
+
+SECTION 6 — DISCLAIMER OF WARRANTIES & LIMITATION OF LIABILITY
+───────────────────────────────────────────────────────────────
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.
+
+IN NO EVENT SHALL VJECTS, ITS FOUNDER, OR CONTRIBUTORS BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING BUT NOT LIMITED TO LOSS OF DATA, BUSINESS INTERRUPTION, OR
+PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES) ARISING IN ANY WAY OUT OF
+THE USE OR INABILITY TO USE THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  © 2026 VJECTS · vjects.com · Telegram: @vjects
+  V-CoPanel Public & Commercialization License v2.0.1
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

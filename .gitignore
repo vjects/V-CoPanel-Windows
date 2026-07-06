@@ -1,0 +1,16 @@
+# Binaries
+bridge.exe
+
+# Workspace directories (runtimes, databases, config, logs)
+workspace/
+
+# Ignore heavy runtime binaries & installers inside pc-assets
+pc-assets/**/*.zip
+pc-assets/**/*.exe
+pc-assets/**/*.msi
+pc-assets/**/*.phar
+
+# Temporary and local OS files
+.DS_Store
+Thumbs.db
+*.log

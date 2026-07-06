@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Factory Reset - V-CoPanel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <style>
+        body {
+            background-color: #08090e;
+            color: #ffffff;
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            overflow: hidden;
+            background-image: radial-gradient(circle at 50% 50%, rgba(239, 68, 68, 0.08) 0%, #08090e 70%);
+            box-sizing: border-box;
+        }
+        
+        /* Siri AI Orb Animation for Reset */
+        .orb-wrapper {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+        }
+        .orb-core {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: #fff;
+            border-radius: 50%;
+            box-shadow: 0 0 30px #fff, 0 0 60px #ef4444;
+            z-index: 10;
+            animation: orbBreathe 3s ease-in-out infinite alternate;
+        }
+        .orb-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #ef4444, #c342ff, #ff2b70, #ef4444);
+            filter: blur(14px);
+            opacity: 0.8;
+            animation: orbSpin 4s linear infinite;
+        }
+        .orb-ring:nth-child(2) {
+            width: 120%;
+            height: 120%;
+            filter: blur(28px);
+            opacity: 0.45;
+            animation: orbSpinReverse 7s linear infinite;
+        }
+        
+        @keyframes orbSpin { 100% { transform: rotate(360deg); } }
+        @keyframes orbSpinReverse { 100% { transform: rotate(-360deg); } }
+        @keyframes orbBreathe {
+            0% { transform: scale(0.9); box-shadow: 0 0 20px #fff, 0 0 50px #c342ff; }
+            100% { transform: scale(1.1); box-shadow: 0 0 35px #fff, 0 0 75px #ef4444; }
+        }
+
+        h1 {
+            font-size: 1.6rem;
+            margin: 0 0 8px 0;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+        p {
+            color: rgba(255, 255, 255, 0.55);
+            line-height: 1.6;
+            margin: 0 0 24px 0;
+            font-size: 0.92rem;
+            max-width: 440px;
+            text-align: center;
+        }
+        .status-box {
+            background: rgba(0, 0, 0, 0.45);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 20px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: #fca5a5;
+            text-align: left;
+            width: 100%;
+            max-width: 440px;
+            box-sizing: border-box;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+        }
+        .status-line {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .status-line:last-child {
+            margin-bottom: 0;
+        }
+        .blink {
+            animation: blinker 1s linear infinite;
+        }
+        @keyframes blinker {
+            50% { opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="orb-wrapper">
+    <div class="orb-ring"></div>
+    <div class="orb-ring"></div>
+    <div class="orb-core"></div>
+</div>
+
+<h1>Factory Reset in Progress</h1>
+<p>Do not close this window. The system is securely erasing the workspace and restarting the core bridge daemon.</p>
+
+<div class="status-box">
+    <div class="status-line"><span class="material-symbols-outlined" style="font-size: 1rem; color: #ef4444;">delete</span> <span id="log-1">Clearing browser cache & local storage...</span></div>
+    <div class="status-line"><span class="material-symbols-outlined" style="font-size: 1rem; color: #f59e0b;">terminal</span> <span id="log-2" style="color: rgba(255,255,255,0.4);">Waiting for backend reset signal...</span></div>
+    <div class="status-line"><span class="material-symbols-outlined" style="font-size: 1rem; color: #34b478;">sync</span> <span id="log-3" style="color: rgba(255,255,255,0.4);">Polling system revival state...</span></div>
+</div>
+
+<script>
+    async function startResetProcess() {
+        // 1. Clear LocalStorage & SessionStorage
+        localStorage.clear();
+        sessionStorage.clear();
+        document.getElementById('log-1').innerHTML += ' OK';
+        document.getElementById('log-1').style.color = '#fff';
+
+        // 2. Clear Caches
+        try {
+            const keys = await caches.keys();
+            await Promise.all(keys.map(k => caches.delete(k)));
+        } catch (e) {
+            console.warn("Cache clear error:", e);
+        }
+
+        // 3. Trigger Backend Reset
+        document.getElementById('log-2').style.color = '#fff';
+        document.getElementById('log-2').innerText = 'Initializing Go-level reset engine...';
+        
+        try {
+            await fetch('/api/engine/reset', { method: 'POST' });
+        } catch (e) {
+            console.error("Init reset error:", e);
+        }
+
+        // 4. Poll Reset Deletion Status
+        const statusInterval = setInterval(async () => {
+            try {
+                const res = await fetch('/api/engine/reset-status');
+                if (res.ok) {
+                    const data = await res.json();
+                    document.getElementById('log-2').innerText = data.status || 'Wiping workspace...';
+                    
+                    // If progress completed
+                    if (data.progress >= 100) {
+                        clearInterval(statusInterval);
+                        document.getElementById('log-2').innerHTML = 'Workspace wiped successfully! OK';
+                        startSystemRevivalPolling();
+                    }
+                }
+            } catch (err) {
+                // If it fails, it means the backend restarted and is rebooting
+                clearInterval(statusInterval);
+                document.getElementById('log-2').innerHTML = 'Workspace wiped successfully! OK';
+                startSystemRevivalPolling();
+            }
+        }, 500);
+    }
+
+    function startSystemRevivalPolling() {
+        // 5. Poll until the backend is back online
+        document.getElementById('log-3').style.color = '#fff';
+        document.getElementById('log-3').innerHTML = 'Waiting for V-CoPanel Bridge to restart <span class="blink">_</span>';
+        
+        const pollInterval = setInterval(async () => {
+            try {
+                const res = await fetch('/api/precheck/status');
+                if (res.ok) {
+                    clearInterval(pollInterval);
+                    document.getElementById('log-3').innerHTML = 'System Online! Redirecting...';
+                    document.getElementById('log-3').style.color = '#34b478';
+                    setTimeout(() => {
+                        window.location.href = '/';
+                    }, 1500);
+                }
+            } catch (err) {
+                // Bridge is down (as expected during boot), keep polling
+            }
+        }, 1500);
+    }
+
+    // Delay start slightly for UX
+    setTimeout(startResetProcess, 1000);
+</script>
+
+</body>
+</html>

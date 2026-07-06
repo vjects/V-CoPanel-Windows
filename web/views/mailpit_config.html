@@ -1,0 +1,188 @@
+<style>
+/* ─── Mailpit Testing Mailbox Shared Service — Unified Glass System ───────
+   Palette : Standard Glassmorphism (#3b82f6 blue accents)
+   Icons   : rgba(255,255,255,0.45) (Uniform, no-rainbow rule)
+   Naming  : service-config-card (No Studio rule)
+──────────────────────────────────────────────────────────────────────────── */
+
+.service-config-card {
+	background: linear-gradient(160deg, rgba(28,32,44,0.7) 0%, rgba(18,20,28,0.5) 100%);
+	backdrop-filter: blur(20px);
+	border: 1px solid rgba(255,255,255,0.08);
+	border-radius: 16px;
+	padding: 22px;
+	box-shadow: 0 8px 28px rgba(0,0,0,0.38);
+	transition: border-color 0.2s ease;
+	margin-bottom: 20px;
+}
+.service-config-card:hover {
+	border-color: rgba(255,255,255,0.14);
+}
+
+.mailpit-metric-box {
+	background: rgba(10,11,16,0.55);
+	border: 1px solid rgba(255,255,255,0.06);
+	border-radius: 12px;
+	padding: 14px 16px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.mailpit-tab-btn {
+	background: transparent;
+	border: 1px solid rgba(255,255,255,0.08);
+	color: rgba(255,255,255,0.6);
+	padding: 6px 14px;
+	border-radius: 8px;
+	font-size: 0.8rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	display: inline-flex;
+	align-items: center;
+	gap: 6px;
+}
+.mailpit-tab-btn:hover {
+	background: rgba(255,255,255,0.08);
+	color: #ffffff;
+}
+.mailpit-tab-btn.active {
+	background: rgba(255,255,255,0.15);
+	border-color: rgba(255,255,255,0.3);
+	color: #ffffff;
+}
+</style>
+
+<div id="tab-mailpit_config" class="tab-content" style="padding: 10px 0;">
+	<!-- Card 1: Mailpit SMTP & Mailbox Shared Service -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; margin-bottom:18px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.6rem;">mail</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.25rem; font-weight:700; color:#ffffff;">Mailpit SMTP & Mailbox Testing Service</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Capture outgoing emails locally via SMTP (<strong style="color:#cbd5e1;">Port 1025</strong>) and inspect them in the Web UI (<strong style="color:#cbd5e1;">Port 8025</strong>).</p>
+				</div>
+			</div>
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span id="mailpit-status-badge" style="padding:6px 14px; border-radius:20px; font-size:0.78rem; font-weight:600; background:rgba(255,255,255,0.1); color:#cbd5e1;">Checking...</span>
+				<button class="pd-btn" style="height:34px; padding:0 14px; font-size:0.78rem;" onclick="loadMailpitConfig()"><span class="material-symbols-outlined" style="font-size:1rem;">refresh</span> Refresh Status</button>
+			</div>
+		</div>
+
+		<!-- SMTP Access & Ports Grid -->
+		<div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:14px;">
+			<div class="mailpit-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">SMTP Server Host</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:1rem;">127.0.0.1</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('127.0.0.1', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+			<div class="mailpit-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">SMTP Port (Email Ingestion)</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:1rem;">1025</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('1025', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+			<div class="mailpit-metric-box">
+				<small style="color:rgba(255,255,255,0.4); font-size:0.78rem; display:block; margin-bottom:6px;">Web UI Port (Browser Inspection)</small>
+				<div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
+					<strong style="color:#f8fafc; font-family:'JetBrains Mono'; font-size:1rem;">8025</strong>
+					<button class="pd-btn" style="height:28px; padding:0 10px; font-size:0.72rem;" onclick="copyText('8025', this)"><span class="material-symbols-outlined" style="font-size:1rem;">content_copy</span> Copy</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Card 2: Daemon Control & Mailbox Management -->
+	<div class="service-config-card">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px;">
+			<div style="display:flex; align-items:center; gap:14px;">
+				<div style="width:44px; height:44px; border-radius:12px; background:rgba(59,130,246,0.12); border:1px solid rgba(59,130,246,0.25); display:flex; align-items:center; justify-content:center;">
+					<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.6rem;">settings_power</span>
+				</div>
+				<div>
+					<h2 style="margin:0; font-size:1.15rem; font-weight:700; color:#ffffff;">Daemon Control & Mailbox Management</h2>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.82rem; margin:3px 0 0 0;">Manage Mailpit background server lifecycle or clear all captured testing emails.</p>
+				</div>
+			</div>
+
+			<div style="display:flex; align-items:center; gap:12px; flex-wrap:wrap;">
+				<button class="pd-btn-primary" id="btn-mailpit-start" onclick="startMailpit()"><span class="material-symbols-outlined">play_arrow</span> Launch Mailpit Server</button>
+				<a href="http://127.0.0.1:8025" target="_blank" class="pd-btn" id="mailpit-webui-link" style="text-decoration:none; display:none; align-items:center; gap:6px; background:rgba(59,130,246,0.15); border-color:rgba(59,130,246,0.3); color:#60a5fa;"><span class="material-symbols-outlined">open_in_new</span> Open Web UI (8025)</a>
+				<button class="pd-btn-danger" id="btn-mailpit-stop" onclick="stopMailpit()" style="display:none;"><span class="material-symbols-outlined">stop_circle</span> Stop Server</button>
+				<button class="pd-btn" id="btn-mailpit-clear" onclick="clearMailbox()" style="background:rgba(239,68,68,0.15); border-color:rgba(239,68,68,0.35); color:#f87171;"><span class="material-symbols-outlined" style="color:#f87171;">delete_sweep</span> Clear Testing Inbox</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Card 3: Multi-Language SMTP Connection Generator -->
+	<div class="service-config-card" style="margin-bottom:0;">
+		<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:14px; margin-bottom:16px;">
+			<div style="display:flex; align-items:center; gap:12px;">
+				<span class="material-symbols-outlined" style="color:rgba(255,255,255,0.45); font-size:1.5rem;">data_object</span>
+				<div>
+					<h3 style="margin:0; font-size:1.05rem; font-weight:700; color:#ffffff;">Multi-Language SMTP Connection Config Generator</h3>
+					<p style="color:rgba(255,255,255,0.35); font-size:0.8rem; margin:2px 0 0 0;">Generate and copy ready-to-use Mailpit SMTP client snippets for your application stack.</p>
+				</div>
+			</div>
+			<div style="display:flex; gap:8px;">
+				<button class="mailpit-tab-btn active" id="mailpit-tab-btn-laravel" onclick="switchMailpitConfigTab('laravel')"><span class="material-symbols-outlined" style="font-size:1rem;">php</span> Laravel / PHP (.env)</button>
+				<button class="mailpit-tab-btn" id="mailpit-tab-btn-node" onclick="switchMailpitConfigTab('node')"><span class="material-symbols-outlined" style="font-size:1rem;">javascript</span> Node.js (Nodemailer)</button>
+				<button class="mailpit-tab-btn" id="mailpit-tab-btn-go" onclick="switchMailpitConfigTab('go')"><span class="material-symbols-outlined" style="font-size:1rem;">code</span> Go (net/smtp)</button>
+			</div>
+		</div>
+
+		<!-- Block: Laravel / PHP -->
+		<div id="mailpit-block-laravel" style="display:block;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyMailpitConfig('laravel', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Laravel Block</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">MAIL_MAILER=smtp
+MAIL_HOST=127.0.0.1
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="hello@v-copanel.test"
+MAIL_FROM_NAME="${APP_NAME}"</pre>
+		</div>
+
+		<!-- Block: Node.js -->
+		<div id="mailpit-block-node" style="display:none;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyMailpitConfig('node', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Node Config</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">// Node.js (Nodemailer) Transport Config
+const nodemailer = require('nodemailer');
+
+const transporter = nodemailer.createTransport({
+  host: '127.0.0.1',
+  port: 1025,
+  secure: false, // TLS/SSL disabled for local testing
+  ignoreTLS: true
+});</pre>
+		</div>
+
+
+
+		<!-- Block: Go -->
+		<div id="mailpit-block-go" style="display:none;">
+			<div style="display:flex; justify-content:flex-end; margin-bottom:8px;">
+				<button class="pd-btn-primary" style="height:28px; padding:0 12px; font-size:0.75rem;" onclick="copyMailpitConfig('go', this)"><span class="material-symbols-outlined" style="font-size:0.9rem;">content_copy</span> Copy Go Snippet</button>
+			</div>
+			<pre style="background:rgba(8,9,14,0.85); padding:14px; border-radius:10px; border:1px solid rgba(255,255,255,0.06); font-family:'JetBrains Mono'; font-size:0.84rem; color:#cbd5e1; line-height:1.6; margin:0;">// Go (net/smtp) Plain Auth & Send
+addr := "127.0.0.1:1025"
+from := "hello@v-copanel.test"
+to := []string{"dev@v-copanel.test"}
+msg := []byte("Subject: Test Email\r\n\r\nThis is a Mailpit test.")
+
+err := smtp.SendMail(addr, nil, from, to, msg)</pre>
+		</div>
+	</div>
+</div>
